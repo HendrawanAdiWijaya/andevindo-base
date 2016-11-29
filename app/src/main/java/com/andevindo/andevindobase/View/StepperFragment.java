@@ -21,8 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.andevindo.base.Model.Stepper;
-import com.andevindo.base.R;
+import com.andevindo.andevindobase.Model.Stepper;
+import com.andevindo.andevindobase.R;
 
 import java.util.List;
 

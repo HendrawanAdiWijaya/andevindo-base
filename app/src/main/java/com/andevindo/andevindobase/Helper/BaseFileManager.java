@@ -15,7 +15,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.andevindo.base.Base;
+import com.andevindo.andevindobase.Base;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

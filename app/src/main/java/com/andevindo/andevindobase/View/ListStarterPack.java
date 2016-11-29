@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.andevindo.base.R;
+import com.andevindo.andevindobase.R;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.wang.avi.Indicator;
 

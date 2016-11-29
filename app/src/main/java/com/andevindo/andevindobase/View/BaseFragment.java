@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.andevindo.base.Adapter.BaseAdapter;
-import com.andevindo.base.R;
+
+import com.andevindo.andevindobase.R;
 
 import java.util.List;
 
