@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="stepperPadding">24dp</dimen>
+    <dimen name="hiddenStepperContentHeight">40dp</dimen>
+    <dimen name="stepperMarginLeft">25dp</dimen>
+</resources>

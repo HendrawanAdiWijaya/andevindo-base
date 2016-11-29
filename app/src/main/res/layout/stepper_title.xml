@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="24dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp">
+
+        <ImageView
+            android:id="@+id/stepper_circle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/stepper_circle"/>
+
+        <TextView
+            android:id="@+id/stepper_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="1"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/stepper_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/stepper_check"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"/>
+
+</LinearLayout>
