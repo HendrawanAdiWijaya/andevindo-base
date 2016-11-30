@@ -15,6 +15,7 @@ public class BaseTimeConverter {
     private static final String sLT = "kk:mm";
     private static final String sLDT = "dd MMM yyyy kk:mm";
     private static final String sSDT = "yyyy-MM-dd HH:mm:ss";
+    private static final String sSD = "yyyy-MM-dd";
 
     public static String formatDateFromNewDate(Date date) {
         SimpleDateFormat localDateFormat = new SimpleDateFormat(sLDT);
@@ -51,6 +52,18 @@ public class BaseTimeConverter {
         SimpleDateFormat localDateFormat = new SimpleDateFormat(sLDT);
         try {
             String date = localDateFormat.format(serverDateFormat.parse(srcDate));
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static String fromLDToSD(String srcDate) {
+        SimpleDateFormat serverDateFormat = new SimpleDateFormat(sSD);
+        SimpleDateFormat localDateFormat = new SimpleDateFormat(sLD);
+        try {
+            String date = serverDateFormat.format(localDateFormat.parse(srcDate));
             return date;
         } catch (ParseException e) {
             e.printStackTrace();
