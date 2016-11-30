@@ -17,6 +17,17 @@ public class BaseTimeConverter {
     private static final String sSDT = "yyyy-MM-dd HH:mm:ss";
     private static final String sSD = "yyyy-MM-dd";
 
+    public static int getDifferentDay(String startDate, String endDate){
+        long different;
+        try {
+            different = new SimpleDateFormat(sSD).parse(endDate).getTime() - new SimpleDateFormat(sSD).parse(startDate).getTime();
+            return (int)different/(1000*60*60*24);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public static String formatDateFromNewDate(Date date) {
         SimpleDateFormat localDateFormat = new SimpleDateFormat(sLDT);
         return localDateFormat.format(date).toString();
