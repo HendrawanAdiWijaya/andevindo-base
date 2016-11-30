@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
-    <com.andevindo.base.View.ListStarterPack
+    <com.andevindo.andevindobase.View.ListStarterPack
         android:id="@+id/list_starter_pack"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
