@@ -21,7 +21,7 @@ public class BaseTimeConverter {
         long different;
         try {
             different = new SimpleDateFormat(sLD).parse(endDate).getTime() - new SimpleDateFormat(sLD).parse(startDate).getTime();
-            return (int)different/(1000*60*60*24);
+            return (int)(different/(1000*60*60*24));
         } catch (ParseException e) {
             e.printStackTrace();
             return 0;
