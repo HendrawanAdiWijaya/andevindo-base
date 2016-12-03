@@ -20,7 +20,7 @@ public class BaseTimeConverter {
     public static int getDifferentDay(String startDate, String endDate){
         long different;
         try {
-            different = new SimpleDateFormat(sSD).parse(endDate).getTime() - new SimpleDateFormat(sSD).parse(startDate).getTime();
+            different = new SimpleDateFormat(sLD).parse(endDate).getTime() - new SimpleDateFormat(sLD).parse(startDate).getTime();
             return (int)different/(1000*60*60*24);
         } catch (ParseException e) {
             e.printStackTrace();
