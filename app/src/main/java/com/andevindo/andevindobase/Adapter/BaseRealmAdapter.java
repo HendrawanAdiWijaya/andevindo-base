@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Created by heendher on 12/5/2016.
@@ -19,7 +20,7 @@ import io.realm.RealmObject;
 
 public abstract class BaseRealmAdapter<T extends RealmObject> extends RecyclerView.Adapter<BaseViewHolder<T>> {
 
-    private RealmList<T> mList;
+    private RealmResults<T> mList;
     private Context mContext;
     private BaseAdapter.BaseAdapterListener<T> mPresenter = new BaseAdapter.BaseAdapterListener<T>() {
         @Override
@@ -37,7 +38,7 @@ public abstract class BaseRealmAdapter<T extends RealmObject> extends RecyclerVi
         mContext = context;
     }
 
-    public BaseRealmAdapter(RealmList<T> list, Context context) {
+    public BaseRealmAdapter(RealmResults<T> list, Context context) {
         mList = list;
         mContext = context;
     }
@@ -75,14 +76,14 @@ public abstract class BaseRealmAdapter<T extends RealmObject> extends RecyclerVi
         holder.setBasePresenter(mList.get(position), mPresenter);
     }
 
-    public void setData(RealmList<T> list){
+    public void setData(RealmResults<T> list){
         mList = null;
         notifyDataSetChanged();
         mList = list;
         notifyDataSetChanged();
     }
 
-    public RealmList<T> getData(){
+    public RealmResults<T> getData(){
         return mList;
     }
 

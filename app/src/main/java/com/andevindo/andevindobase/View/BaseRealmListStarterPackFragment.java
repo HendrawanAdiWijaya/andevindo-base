@@ -18,6 +18,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Created by heendher on 11/18/2016.
@@ -138,7 +139,7 @@ public abstract class BaseRealmListStarterPackFragment<T extends RealmObject> ex
         return mAdapter;
     }
 
-    public void setAdapterData(RealmList<T> list){
+    public void setAdapterData(RealmResults<T> list){
         mAdapter.setData(list);
     }
 
