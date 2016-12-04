@@ -87,17 +87,6 @@ public abstract class BaseRealmAdapter<T extends RealmObject> extends RecyclerVi
         return mList;
     }
 
-    public void removeDataById(int position){
-        mList.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public void removeData(T t){
-        int index = mList.indexOf(t);
-        mList.remove(t);
-        notifyItemRemoved(index);
-    }
-
     public T getDataById(int position){
         return mList.get(position);
     }
