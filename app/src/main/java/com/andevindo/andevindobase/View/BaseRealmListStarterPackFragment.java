@@ -133,6 +133,10 @@ public abstract class BaseRealmListStarterPackFragment<T extends RealmObject> ex
         return 0;
     }
 
+    protected RecyclerView getRecyclerView(){
+        return mRecyclerView;
+    }
+
     protected abstract BaseRealmAdapter<T> adapter();
 
     public BaseRealmAdapter<T> getAdapter() {

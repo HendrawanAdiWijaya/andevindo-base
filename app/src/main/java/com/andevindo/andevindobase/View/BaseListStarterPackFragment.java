@@ -128,6 +128,10 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
         return 0;
     }
 
+    protected RecyclerView getRecyclerView(){
+        return mRecyclerView;
+    }
+
     protected abstract BaseAdapter<T> adapter();
 
     public BaseAdapter<T> getAdapter() {

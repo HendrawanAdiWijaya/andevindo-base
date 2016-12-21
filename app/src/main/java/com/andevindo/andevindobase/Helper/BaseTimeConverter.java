@@ -15,6 +15,7 @@ public class BaseTimeConverter {
     private static final String sLT = "kk:mm";
     private static final String sLDT = "dd MMM yyyy kk:mm";
     private static final String sSDT = "yyyy-MM-dd HH:mm:ss";
+    private static final String sSDTZ = "yyyy-MM-dd";
     private static final String sSD = "yyyy-MM-dd";
 
     public static int getDifferentDay(String startDate, String endDate){
