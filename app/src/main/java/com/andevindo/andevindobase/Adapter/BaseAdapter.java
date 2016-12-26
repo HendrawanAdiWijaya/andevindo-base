@@ -169,7 +169,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         }
         removeProgress();
         int startIndex = mList.size();
-        mList.addAll(mList);
+        mList.addAll(list);
         notifyItemInserted(startIndex);
         mIsLoading = false;
     }
@@ -201,7 +201,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
             mList = new ArrayList<>(1);
         }
         int startIndex = mList.size();
-        getData().addAll(mList);
+        mList.addAll(list);
         notifyItemInserted(startIndex);
         mIsLoading = false;
     }
