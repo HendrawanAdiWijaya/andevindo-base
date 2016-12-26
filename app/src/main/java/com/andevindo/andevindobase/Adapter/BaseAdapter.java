@@ -23,6 +23,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     private Context mContext;
     private int mPage = 1;
     private boolean mIsLoading = true;
+    private boolean mFirstLoad;
     private int mVisibleThreshold = 5;
     private boolean mIsNull;
     private int mLastVisibleItem, mTotalItemCount, mFirstVisibleItem, mVisibleItemCount, mPreviousTotal = 0;
@@ -130,12 +131,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     }
 
     public void setData(List<T> list) {
+        mPage = 1;
+        mIsLoading = false;
+        mFirstLoad = true;
         mList = null;
         notifyDataSetChanged();
         mList = list;
         notifyDataSetChanged();
-        mPage = 1;
-        mIsLoading = false;
     }
 
     public List<T> getData() {
