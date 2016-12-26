@@ -104,14 +104,6 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
         mListStarterPack.onLoadingState();
     }
 
-    public void showMoreLoader(){
-        mListStarterPack.showMoreLoader();
-    }
-
-    public void hideMoreLoader(){
-        mListStarterPack.hideMoreLoader();
-    }
-
     public void setListStarterPackPresenter(ListStarterPack.ListStarterPackPresenter presenter){
         mListStarterPack.setPresenter(presenter);
     }
@@ -144,6 +136,18 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
 
     public void addAdapterData(T t){
         mAdapter.addData(t);
+    }
+
+    public void addAdapterData(List<T> list){
+        mAdapter.addData(list);
+    }
+
+    public void addMoreAdapterData(T t){
+        mAdapter.addMoreData(t);
+    }
+
+    public void addMoreAdapterData(List<T> list){
+        mAdapter.addMoreData(list);
     }
 
     protected RecyclerView.LayoutManager layoutManager(){

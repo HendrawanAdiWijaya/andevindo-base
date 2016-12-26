@@ -196,11 +196,11 @@ public class ListStarterPack extends RelativeLayout{
     }
 
     public void showMoreLoader(){
-        mMoreLoader.smoothToHide();
+        mMoreLoader.smoothToShow();
     }
 
     public void hideMoreLoader(){
-        mMoreLoader.smoothToShow();
+        mMoreLoader.smoothToHide();
     }
 
     public void setPresenter(ListStarterPackPresenter presenter){

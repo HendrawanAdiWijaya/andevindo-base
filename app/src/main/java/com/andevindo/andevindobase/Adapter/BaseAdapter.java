@@ -1,6 +1,7 @@
 package com.andevindo.andevindobase.Adapter;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
     private List<T> mList;
     private Context mContext;
+    private int mPage = 1;
+    private boolean mIsLoading = true;
+    private int mVisibleThreshold = 5;
+    private boolean mIsNull;
+    private int mLastVisibleItem, mTotalItemCount, mFirstVisibleItem, mVisibleItemCount, mPreviousTotal = 0;
     private BaseAdapterListener<T> mPresenter = new BaseAdapterListener<T>() {
         @Override
         public void onClick(T t) {
@@ -65,6 +71,32 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         void onLongClick(T t);
     }
 
+    public void setLoadMorePresenter(final BaseAdapterLoadMoreListener presenter, RecyclerView recyclerView){
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mTotalItemCount = linearLayoutManager.getItemCount();
+                mVisibleItemCount = linearLayoutManager.getChildCount();
+                mFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+
+                if (!mIsLoading&&(mTotalItemCount-1)>=lastVisibleItem&&!mIsNull){
+                    mPage++;
+                    addProgress();
+                    presenter.onLoadMore(mPage);
+                    mIsLoading = true;
+                }
+
+            }
+        });
+    }
+
+    public interface BaseAdapterLoadMoreListener extends BaseAdapterListener{
+        void onLoadMore(int page);
+    }
+
     @Override
     public void onBindViewHolder(BaseViewHolder<T> holder, int position) {
         holder.bindData(mList.get(position));
@@ -76,6 +108,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         notifyDataSetChanged();
         mList = list;
         notifyDataSetChanged();
+        mPage = 1;
+        mIsLoading = false;
     }
 
     public List<T> getData(){
@@ -89,6 +123,61 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mList.add(t);
         int index = mList.indexOf(t);
         notifyItemInserted(index);
+        mIsLoading = false;
+    }
+
+    public void addMoreData(T t){
+        if (mList==null){
+            mList = new ArrayList<>(1);
+        }
+        removeProgress();
+        mList.add(t);
+        int index = mList.indexOf(t);
+        notifyItemInserted(index);
+        mIsLoading = false;
+    }
+
+    public void addMoreData(List<T> list){
+        if (mList==null){
+            mList = new ArrayList<>(1);
+        }
+        removeProgress();
+        int startIndex = mList.size();
+        mList.addAll(mList);
+        notifyItemInserted(startIndex);
+        mIsLoading = false;
+    }
+
+    public void setIsNull(){
+        mIsNull = true;
+    }
+
+    public void addProgress(){
+        if (mList!=null)
+            mList = new ArrayList<>(1);
+        int lastIndex = mList.size();
+        mList.add(null);
+        notifyItemInserted(lastIndex+1);
+    }
+
+    public void removeProgress(){
+        if (mList!=null){
+            if (mList.size()>0){
+                int lastIndex = mList.size();
+                mList.remove(lastIndex);
+                notifyItemRemoved(lastIndex);
+            }
+        }
+    }
+
+    public void addData(List<T> list){
+        if (mList==null){
+            mList = new ArrayList<>(1);
+        }
+        int startIndex = mList.size();
+        getData().addAll(mList);
+        notifyItemInserted(startIndex);
+        mIsLoading = false;
     }
 
     public void removeDataById(int position){
