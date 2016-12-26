@@ -189,7 +189,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     public void removeProgress() {
         if (mList != null) {
             if (mList.size() > 0) {
-                int lastIndex = mList.size();
+                int lastIndex = mList.size() -1;
                 mList.remove(lastIndex);
                 notifyItemRemoved(lastIndex);
             }
