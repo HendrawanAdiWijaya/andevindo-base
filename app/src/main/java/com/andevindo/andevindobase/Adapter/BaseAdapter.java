@@ -106,7 +106,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
                 mFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
-                if (!mIsLoading && (mTotalItemCount - 1) >= lastVisibleItem && !mIsNull) {
+                if (!mIsLoading && (mTotalItemCount - 1) >= lastVisibleItem && !mIsNull && mFirstLoad) {
                     mPage++;
                     addProgress();
                     presenter.onLoadMore(mPage);
