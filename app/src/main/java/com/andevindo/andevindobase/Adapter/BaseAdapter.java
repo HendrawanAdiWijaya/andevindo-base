@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.andevindo.andevindobase.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
  */
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder<T>> {
 
+    private static int PROGRESS = 100;
     private List<T> mList;
     private Context mContext;
     private int mPage = 1;
@@ -44,35 +47,55 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mContext = context;
     }
 
-    public void setBaseListener(BaseAdapterListener<T> presenter){
+    public void setBaseListener(BaseAdapterListener<T> presenter) {
         mPresenter = presenter;
     }
 
-    public Context getContext(){
+    public Context getContext() {
         return mContext;
     }
 
     @Override
     public BaseViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(itemViewId(viewType), parent, false);
-        return bindData(view);
+        if (viewType == PROGRESS) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_load_more_progress, parent, false);
+            return new ProgressViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(mContext).inflate(itemViewId(viewType), parent, false);
+            return bindData(view);
+        }
+
+
+    }
+
+    public static class ProgressViewHolder extends BaseViewHolder {
+
+        public ProgressViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void bindData(Object o) {
+
+        }
     }
 
     protected abstract BaseViewHolder bindData(View view);
 
     protected abstract int itemViewId(int viewType);
 
-    protected BaseAdapterListener<T> getBaseAdapter(){
+    protected BaseAdapterListener<T> getBaseAdapter() {
         return mPresenter;
     }
 
-    public interface BaseAdapterListener<T>{
+    public interface BaseAdapterListener<T> {
         void onClick(T t);
+
         void onLongClick(T t);
     }
 
-    public void setLoadMorePresenter(final BaseAdapterLoadMoreListener presenter, RecyclerView recyclerView){
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+    public void setLoadMorePresenter(final BaseAdapterLoadMoreListener presenter, RecyclerView recyclerView) {
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -82,7 +105,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
                 mFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
-                if (!mIsLoading&&(mTotalItemCount-1)>=lastVisibleItem&&!mIsNull){
+                if (!mIsLoading && (mTotalItemCount - 1) >= lastVisibleItem && !mIsNull) {
                     mPage++;
                     addProgress();
                     presenter.onLoadMore(mPage);
@@ -93,17 +116,20 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         });
     }
 
-    public interface BaseAdapterLoadMoreListener extends BaseAdapterListener{
+    public interface BaseAdapterLoadMoreListener extends BaseAdapterListener {
         void onLoadMore(int page);
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder<T> holder, int position) {
-        holder.bindData(mList.get(position));
-        holder.setBasePresenter(mList.get(position), mPresenter);
+        if (!(holder instanceof ProgressViewHolder)) {
+            holder.bindData(mList.get(position));
+            holder.setBasePresenter(mList.get(position), mPresenter);
+        }
+
     }
 
-    public void setData(List<T> list){
+    public void setData(List<T> list) {
         mList = null;
         notifyDataSetChanged();
         mList = list;
@@ -112,12 +138,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsLoading = false;
     }
 
-    public List<T> getData(){
+    public List<T> getData() {
         return mList;
     }
 
-    public void addData(T t){
-        if (mList==null){
+    public void addData(T t) {
+        if (mList == null) {
             mList = new ArrayList<>(1);
         }
         mList.add(t);
@@ -126,8 +152,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsLoading = false;
     }
 
-    public void addMoreData(T t){
-        if (mList==null){
+    public void addMoreData(T t) {
+        if (mList == null) {
             mList = new ArrayList<>(1);
         }
         removeProgress();
@@ -137,8 +163,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsLoading = false;
     }
 
-    public void addMoreData(List<T> list){
-        if (mList==null){
+    public void addMoreData(List<T> list) {
+        if (mList == null) {
             mList = new ArrayList<>(1);
         }
         removeProgress();
@@ -148,21 +174,21 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsLoading = false;
     }
 
-    public void setIsNull(){
+    public void setIsNull() {
         mIsNull = true;
     }
 
-    public void addProgress(){
-        if (mList!=null)
+    public void addProgress() {
+        if (mList != null)
             mList = new ArrayList<>(1);
         int lastIndex = mList.size();
         mList.add(null);
-        notifyItemInserted(lastIndex+1);
+        notifyItemInserted(lastIndex + 1);
     }
 
-    public void removeProgress(){
-        if (mList!=null){
-            if (mList.size()>0){
+    public void removeProgress() {
+        if (mList != null) {
+            if (mList.size() > 0) {
                 int lastIndex = mList.size();
                 mList.remove(lastIndex);
                 notifyItemRemoved(lastIndex);
@@ -170,8 +196,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         }
     }
 
-    public void addData(List<T> list){
-        if (mList==null){
+    public void addData(List<T> list) {
+        if (mList == null) {
             mList = new ArrayList<>(1);
         }
         int startIndex = mList.size();
@@ -180,18 +206,18 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsLoading = false;
     }
 
-    public void removeDataById(int position){
+    public void removeDataById(int position) {
         mList.remove(position);
         notifyItemRemoved(position);
     }
 
-    public void removeData(T t){
+    public void removeData(T t) {
         int index = mList.indexOf(t);
         mList.remove(t);
         notifyItemRemoved(index);
     }
 
-    public T getDataById(int position){
+    public T getDataById(int position) {
         return mList.get(position);
     }
 
@@ -201,5 +227,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
             return 0;
         else
             return mList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mList.get(position) == null)
+            return PROGRESS;
+        else
+            return super.getItemViewType(position);
     }
 }
