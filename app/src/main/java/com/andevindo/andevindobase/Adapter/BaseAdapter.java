@@ -190,7 +190,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
             mList = new ArrayList<>(1);
         int lastIndex = mList.size();
         mList.add(null);
-        notifyItemInserted(lastIndex + 1);
+        notifyItemInserted(lastIndex);
     }
 
     public void removeProgress() {
