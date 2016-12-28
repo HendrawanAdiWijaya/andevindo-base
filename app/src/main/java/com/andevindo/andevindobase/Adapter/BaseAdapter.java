@@ -108,7 +108,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
                 if (!mIsLoading && (mTotalItemCount - 1) >= lastVisibleItem && !mIsNull && mFirstLoad) {
                     mPage++;
-                    addProgress();
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            addProgress();
+                        }
+                    });
                     presenter.onLoadMore(mPage);
                     mIsLoading = true;
                 }
