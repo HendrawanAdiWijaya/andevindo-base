@@ -24,6 +24,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     private int mPage = 1;
     private boolean mIsLoading = true;
     private boolean mFirstLoad;
+    private boolean mSomethingError;
     private int mVisibleThreshold = 5;
     private boolean mIsNull;
     private int mLastVisibleItem, mTotalItemCount, mFirstVisibleItem, mVisibleItemCount, mPreviousTotal = 0;
@@ -103,10 +104,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
                 mFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
 
-                if (!mIsLoading && (mTotalItemCount - 1) >= lastVisibleItem && !mIsNull && mFirstLoad) {
+                if (!mIsLoading && (mTotalItemCount - 1) <= lastVisibleItem && !mIsNull && mFirstLoad && !mSomethingError) {
                     mPage++;
                     mLoadMoreListener.onLoadMore(mPage);
                     mIsLoading = true;
+                }
+
+                if (lastVisibleItem==mTotalItemCount-2){
+                    mSomethingError = false;
                 }
 
             }
@@ -131,6 +136,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsLoading = false;
         mIsNull = false;
         mFirstLoad = true;
+        mSomethingError = false;
         mList = list;
         if (mLoadMoreListener != null&&mList!=null)
             mList.add(null);
@@ -166,6 +172,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsNull = true;
         if (mList!=null&&mLoadMoreListener!=null)
             removeProgress();
+    }
+
+    public void setSomethingError(){
+        mSomethingError = true;
     }
 
     public void addProgress() {
