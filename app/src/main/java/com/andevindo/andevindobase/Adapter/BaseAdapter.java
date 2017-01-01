@@ -118,7 +118,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         });
     }
 
-    public interface BaseAdapterLoadMoreListener extends BaseAdapterListener {
+    public interface BaseAdapterLoadMoreListener {
         void onLoadMore(int page);
     }
 
@@ -176,6 +176,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
     public void setSomethingError(){
         mSomethingError = true;
+        if (mList!=null&&mLoadMoreListener!=null)
+            removeProgress();
     }
 
     public void addProgress() {
