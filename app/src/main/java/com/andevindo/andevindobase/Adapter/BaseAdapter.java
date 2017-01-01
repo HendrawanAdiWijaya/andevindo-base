@@ -183,15 +183,15 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     }
 
     public void setIsNull() {
-        mIsNull = true;
-        if (mList != null && mLoadMoreListener != null)
+        if (mList != null && mLoadMoreListener != null && !mIsNull)
             removeProgress(true);
+        mIsNull = true;
     }
 
     public void setSomethingError() {
-        mSomethingError = true;
-        if (mList != null && mLoadMoreListener != null)
+        if (mList != null && mLoadMoreListener != null && !mSomethingError)
             removeProgress(true);
+        mSomethingError = true;
     }
 
     public void addProgress() {
@@ -206,9 +206,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         if (mList != null) {
             if (mList.size() > 0) {
                 int lastIndex = mList.size() - 1;
-                mList.remove(lastIndex);
-                if (notify)
-                    notifyItemRemoved(lastIndex);
+                if (mList.get(lastIndex) == null){
+                    mList.remove(lastIndex);
+                    if (notify)
+                        notifyItemRemoved(lastIndex);
+                }
             }
         }
     }
