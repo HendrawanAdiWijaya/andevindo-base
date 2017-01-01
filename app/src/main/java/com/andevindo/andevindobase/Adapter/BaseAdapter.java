@@ -110,7 +110,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
                     mIsLoading = true;
                 }
 
-                if (lastVisibleItem==mTotalItemCount-2){
+                if (lastVisibleItem == mTotalItemCount - 2) {
                     mSomethingError = false;
                 }
 
@@ -138,7 +138,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mFirstLoad = true;
         mSomethingError = false;
         mList = list;
-        if (mLoadMoreListener != null&&mList!=null)
+        if (mLoadMoreListener != null && mList != null)
             mList.add(null);
         notifyDataSetChanged();
     }
@@ -159,7 +159,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
     public void addMoreData(List<T> list) {
         if (mList != null) {
-            removeProgress();
+            removeProgress(false);
             int startIndex = mList.size();
             mList.addAll(list);
             mList.add(null);
@@ -170,14 +170,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
     public void setIsNull() {
         mIsNull = true;
-        if (mList!=null&&mLoadMoreListener!=null)
-            removeProgress();
+        if (mList != null && mLoadMoreListener != null)
+            removeProgress(true);
     }
 
-    public void setSomethingError(){
+    public void setSomethingError() {
         mSomethingError = true;
-        if (mList!=null&&mLoadMoreListener!=null)
-            removeProgress();
+        if (mList != null && mLoadMoreListener != null)
+            removeProgress(true);
     }
 
     public void addProgress() {
@@ -188,12 +188,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         notifyItemInserted(lastIndex);
     }
 
-    public void removeProgress() {
+    public void removeProgress(boolean notify) {
         if (mList != null) {
             if (mList.size() > 0) {
                 int lastIndex = mList.size() - 1;
                 mList.remove(lastIndex);
-                notifyItemRemoved(lastIndex);
+                if (notify)
+                    notifyItemRemoved(lastIndex);
             }
         }
     }
