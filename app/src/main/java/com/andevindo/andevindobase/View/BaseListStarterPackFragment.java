@@ -45,9 +45,6 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
         else
             mRecyclerView = (RecyclerView) mView.findViewById(recyclerViewId());
 
-        mAdapter = adapter();
-        mRecyclerView.setAdapter(mAdapter);
-
         if (layoutManager() != null)
             mRecyclerView.setLayoutManager(layoutManager());
         else
@@ -61,6 +58,10 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
                 mRecyclerView.addItemDecoration(list.get(i));
             }
         }
+
+        mAdapter = adapter();
+        mRecyclerView.setAdapter(mAdapter);
+
         return mView;
     }
 
