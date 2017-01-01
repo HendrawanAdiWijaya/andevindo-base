@@ -142,10 +142,6 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
         mAdapter.addData(list);
     }
 
-    public void addMoreAdapterData(T t){
-        mAdapter.addMoreData(t);
-    }
-
     public void addMoreAdapterData(List<T> list){
         mAdapter.addMoreData(list);
     }
