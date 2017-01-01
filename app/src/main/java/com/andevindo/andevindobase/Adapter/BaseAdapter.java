@@ -164,6 +164,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
     public void setIsNull() {
         mIsNull = true;
+        if (mList!=null&&mLoadMoreListener!=null)
+            removeProgress();
     }
 
     public void addProgress() {
