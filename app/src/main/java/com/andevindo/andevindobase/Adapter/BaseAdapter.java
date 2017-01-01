@@ -130,7 +130,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mPage = 1;
         mIsLoading = false;
         mIsNull = false;
-        mFirstLoad = false;
+        mFirstLoad = true;
         mList = list;
         if (mLoadMoreListener != null)
             mList.add(null);
