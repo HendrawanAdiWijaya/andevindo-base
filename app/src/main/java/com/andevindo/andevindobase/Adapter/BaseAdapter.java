@@ -158,13 +158,27 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     }
 
     public void addMoreData(List<T> list) {
-        if (mList != null) {
-            removeProgress(false);
+        if (mList != null && list != null) {
+            changeProgressData(list.get(0));
+            list.remove(0);
             int startIndex = mList.size();
-            mList.addAll(list);
-            mList.add(null);
-            notifyItemInserted(startIndex);
+            if (list.size() != 0) {
+                mList.addAll(list);
+                mList.add(null);
+                notifyItemInserted(startIndex);
+            }
+
             mIsLoading = false;
+        }
+    }
+
+    private void changeProgressData(T t) {
+        if (mList != null) {
+            if (mList.size() > 0) {
+                int lastIndex = mList.size() - 1;
+                mList.set(lastIndex, t);
+                notifyItemChanged(lastIndex);
+            }
         }
     }
 
