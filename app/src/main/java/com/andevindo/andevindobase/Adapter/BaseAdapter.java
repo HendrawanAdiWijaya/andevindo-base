@@ -132,7 +132,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsNull = false;
         mFirstLoad = true;
         mList = list;
-        if (mLoadMoreListener != null)
+        if (mLoadMoreListener != null&&mList!=null)
             mList.add(null);
         notifyDataSetChanged();
     }
