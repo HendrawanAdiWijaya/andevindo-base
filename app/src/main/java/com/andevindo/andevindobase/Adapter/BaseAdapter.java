@@ -27,17 +27,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     private int mVisibleThreshold = 5;
     private boolean mIsNull;
     private int mLastVisibleItem, mTotalItemCount, mFirstVisibleItem, mVisibleItemCount, mPreviousTotal = 0;
-    private BaseAdapterListener<T> mPresenter = new BaseAdapterListener<T>() {
-        @Override
-        public void onClick(T t) {
-            Log.d("Adapter", "OnClick");
-        }
-
-        @Override
-        public void onLongClick(T t) {
-            Log.d("Adapter", "OnLongClick");
-        }
-    };
+    private BaseAdapterListener<T> mPresenter;
+    private BaseAdapterLoadMoreListener mLoadMoreListener;
 
     public BaseAdapter(Context context) {
         mContext = context;
@@ -46,6 +37,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     public BaseAdapter(List<T> list, Context context) {
         mList = list;
         mContext = context;
+    }
+
+    public BaseAdapter(Context context, BaseAdapterLoadMoreListener listener, RecyclerView recyclerView) {
+        mContext = context;
+        mLoadMoreListener = listener;
+        setLoadMorePresenter(recyclerView);
     }
 
     public void setBaseListener(BaseAdapterListener<T> presenter) {
@@ -95,7 +92,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         void onLongClick(T t);
     }
 
-    public void setLoadMorePresenter(final BaseAdapterLoadMoreListener presenter, RecyclerView recyclerView) {
+    private void setLoadMorePresenter(RecyclerView recyclerView) {
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -108,13 +105,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
                 if (!mIsLoading && (mTotalItemCount - 1) >= lastVisibleItem && !mIsNull && mFirstLoad) {
                     mPage++;
-                    recyclerView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            addProgress();
-                        }
-                    });
-                    presenter.onLoadMore(mPage);
+                    mLoadMoreListener.onLoadMore(mPage);
                     mIsLoading = true;
                 }
 
@@ -138,10 +129,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     public void setData(List<T> list) {
         mPage = 1;
         mIsLoading = false;
-        mFirstLoad = true;
-        mList = null;
-        notifyDataSetChanged();
+        mIsNull = false;
+        mFirstLoad = false;
         mList = list;
+        if (mLoadMoreListener != null)
+            mList.add(null);
         notifyDataSetChanged();
     }
 
@@ -159,26 +151,15 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         mIsLoading = false;
     }
 
-    public void addMoreData(T t) {
-        if (mList == null) {
-            mList = new ArrayList<>(1);
-        }
-        removeProgress();
-        mList.add(t);
-        int index = mList.indexOf(t);
-        notifyItemInserted(index);
-        mIsLoading = false;
-    }
-
     public void addMoreData(List<T> list) {
-        if (mList == null) {
-            mList = new ArrayList<>(1);
+        if (mList != null) {
+            removeProgress();
+            int startIndex = mList.size();
+            mList.addAll(list);
+            mList.add(null);
+            notifyItemInserted(startIndex);
+            mIsLoading = false;
         }
-        removeProgress();
-        int startIndex = mList.size();
-        mList.addAll(list);
-        notifyItemInserted(startIndex);
-        mIsLoading = false;
     }
 
     public void setIsNull() {
@@ -196,7 +177,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     public void removeProgress() {
         if (mList != null) {
             if (mList.size() > 0) {
-                int lastIndex = mList.size() -1;
+                int lastIndex = mList.size() - 1;
                 mList.remove(lastIndex);
                 notifyItemRemoved(lastIndex);
             }
