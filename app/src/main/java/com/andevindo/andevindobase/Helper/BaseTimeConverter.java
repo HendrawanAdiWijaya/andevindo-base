@@ -133,4 +133,16 @@ public class BaseTimeConverter {
         }
     }
 
+    public static long getLongFromSDT(String sdt){
+        long server;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(sSDT);
+        try {
+            server = simpleDateFormat.parse(sdt).getTime();
+            return server;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

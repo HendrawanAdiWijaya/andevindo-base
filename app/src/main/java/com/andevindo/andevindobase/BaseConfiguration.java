@@ -7,13 +7,19 @@ package com.andevindo.andevindobase;
 public class BaseConfiguration {
 
     private String mFolderName;
+    private String mSharedPreferencesName;
 
     private BaseConfiguration(Builder builder) {
         mFolderName = builder.mFolderName;
+        mSharedPreferencesName = builder.mSharedPreferencesName;
     }
 
     public String getFolderName() {
         return mFolderName;
+    }
+
+    public String getSharedPreferencesName(){
+        return mSharedPreferencesName;
     }
 
     public void setFolderName(String folderName) {
@@ -23,12 +29,18 @@ public class BaseConfiguration {
     public static class Builder{
 
         private String mFolderName = "Andevindo";
+        private String mSharedPreferencesName = "Andevindo";
 
         public Builder() {
         }
 
         public Builder setFolderName(String folderName){
             mFolderName = folderName;
+            return this;
+        }
+
+        public Builder setSharedPreferencesName(String sharedPreferencesName){
+            mSharedPreferencesName = sharedPreferencesName;
             return this;
         }
 
