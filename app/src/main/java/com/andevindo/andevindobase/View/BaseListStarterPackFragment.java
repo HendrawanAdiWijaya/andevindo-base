@@ -4,6 +4,7 @@ package com.andevindo.andevindobase.View;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
     private BaseAdapter<T> mAdapter;
     private View mView;
     private ListStarterPack mListStarterPack;
+    private NestedScrollView mNestedScrollView;
 
     @Nullable
     @Override
@@ -59,6 +61,8 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
             }
         }
 
+        mNestedScrollView = (NestedScrollView)mView.findViewById(R.id.scroll_state);
+
         mAdapter = adapter();
         mRecyclerView.setAdapter(mAdapter);
 
@@ -79,6 +83,7 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
 
     public void setNestedScrolling(boolean enable){
         mRecyclerView.setNestedScrollingEnabled(enable);
+        mNestedScrollView.setNestedScrollingEnabled(enable);
     }
 
     public ListStarterPack getListStarterPack(){
