@@ -152,6 +152,30 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
         mAdapter.addMoreData(list);
     }
 
+    public void customNullTitle(String title){
+        mListStarterPack.setNullTitle(title);
+    }
+
+    public void customNullIcon(int resId){
+        mListStarterPack.setNullImage(resId);
+    }
+
+    public void customNetworkErrorTitle(String title){
+        mListStarterPack.setNetworkErrorTitle(title);
+    }
+
+    public void customNetworkErrorIcon(int resId){
+        mListStarterPack.setNetworkErrorImage(resId);
+    }
+
+    public void customServerErrorTitle(String title){
+        mListStarterPack.setServerErrorTitle(title);
+    }
+
+    public void customServerErrorIcon(int resId){
+        mListStarterPack.setServerErrorImage(resId);
+    }
+
     protected RecyclerView.LayoutManager layoutManager(){
         return null;
     }

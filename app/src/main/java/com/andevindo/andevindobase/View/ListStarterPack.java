@@ -215,11 +215,11 @@ public class ListStarterPack extends RelativeLayout{
         mLoader.setIndicatorColor(color);
     }
 
-    public void serverErrorTitle(String title){
+    public void setServerErrorTitle(String title){
         mServerErrorTitle.setText(title);
     }
 
-    public void serverErrorImage(int resId){
+    public void setServerErrorImage(int resId){
         mServerErrorImage.setImageResource(resId);
     }
 
@@ -227,7 +227,7 @@ public class ListStarterPack extends RelativeLayout{
         mNetworkErrorTitle.setText(title);
     }
 
-    public void networkErrorImage(int resId){
+    public void setNetworkErrorImage(int resId){
         mNetworkErrorImage.setImageResource(resId);
     }
 
@@ -235,7 +235,7 @@ public class ListStarterPack extends RelativeLayout{
         mNullTitle.setText(title);
     }
 
-    public void nullImage(int resId){
+    public void setNullImage(int resId){
         mNullImage.setImageResource(resId);
     }
 
