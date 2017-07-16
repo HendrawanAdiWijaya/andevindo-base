@@ -152,6 +152,14 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
         mAdapter.addMoreData(list);
     }
 
+    public void setMoreOnNull(){
+        mAdapter.setIsNull();
+    }
+
+    public void setMoreSomethingError(){
+        mAdapter.setSomethingError();
+    }
+
     public void customNullTitle(String title){
         mListStarterPack.setNullTitle(title);
     }
@@ -174,6 +182,19 @@ public abstract class BaseListStarterPackFragment<T> extends Fragment {
 
     public void customServerErrorIcon(int resId){
         mListStarterPack.setServerErrorImage(resId);
+    }
+
+    public void customColor(int colorId){
+        mListStarterPack.setLoaderColor(colorId);
+        mListStarterPack.setMoreLoaderColor(colorId);
+    }
+
+    public void customLoaderType(IndicatorTypes indicatorTypes){
+        mListStarterPack.setLoaderType(indicatorTypes);
+    }
+
+    public void customMoreLoaderType(IndicatorTypes indicatorTypes){
+        mListStarterPack.setMoreLoaderType(indicatorTypes);
     }
 
     protected RecyclerView.LayoutManager layoutManager(){

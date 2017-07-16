@@ -207,12 +207,20 @@ public class ListStarterPack extends RelativeLayout{
         mPresenter = presenter;
     }
 
-    public void indicatorType(IndicatorTypes indicatorTypes){
+    public void setLoaderType(IndicatorTypes indicatorTypes){
         mLoader.setIndicator(indicatorTypes.name());
     }
 
-    public void indicatorColor(int color){
+    public void setMoreLoaderType(IndicatorTypes indicatorTypes){
+        mMoreLoader.setIndicator(indicatorTypes.name());
+    }
+
+    public void setLoaderColor(int color){
         mLoader.setIndicatorColor(color);
+    }
+
+    public void setMoreLoaderColor(int color){
+        mMoreLoader.setIndicatorColor(color);
     }
 
     public void setServerErrorTitle(String title){
