@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -28,16 +29,18 @@ public class BaseCamera {
 
     private Activity mActivity;
     private String mCurrentPhotoPath;
+    private String mApplicationId;
 
-    public BaseCamera(Activity activity) {
+    public BaseCamera(Activity activity, String applicationId) {
         mActivity = activity;
+        mApplicationId = applicationId;
     }
 
 
     public void show(int requestCode) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            Uri outPutUri = FileProvider.getUriForFile(mActivity, BuildConfig.APPLICATION_ID + ".provider", createImageFile());
+            Uri outPutUri = FileProvider.getUriForFile(mActivity, mApplicationId + ".provider", createImageFile());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
             mActivity.startActivityForResult(intent, requestCode);
         } catch (IOException e) {
