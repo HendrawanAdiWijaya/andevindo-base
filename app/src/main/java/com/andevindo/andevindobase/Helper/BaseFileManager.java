@@ -36,7 +36,7 @@ public class BaseFileManager {
     public static final int CAMERA_IMAGE_CODE = 0;
     public static final int CAMERA_VIDEO_CODE = 1;
     public static final int FILE_MANAGER_CODE = 2;
-    private File mImageDir, mVideoDir, mMiscDir;
+    private static File mImageDir, mVideoDir, mMiscDir;
 
     private static BaseFileManager ourInstance = new BaseFileManager();
 
@@ -93,7 +93,7 @@ public class BaseFileManager {
 
     }
 
-    private boolean checkDirectory() {
+    public static boolean checkDirectory() {
         File baseDir = new File(Environment.getExternalStoragePublicDirectory(Environment.getExternalStorageState()), Base.getConfig().getFolderName());
         if (!baseDir.exists()) {
             if (!baseDir.mkdirs()) {
@@ -158,7 +158,7 @@ public class BaseFileManager {
         return true;
     }
 
-    private File getDirectory(int type) {
+    public static File getDirectory(int type) {
         if (checkDirectory()) {
             if (type == CAMERA_IMAGE_CODE) {
                 return mImageDir;
@@ -173,7 +173,7 @@ public class BaseFileManager {
 
     }
 
-    private File getOutputMediaFile(int type) {
+    public static File getOutputMediaFile(int type) {
         File mediaFile;
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
