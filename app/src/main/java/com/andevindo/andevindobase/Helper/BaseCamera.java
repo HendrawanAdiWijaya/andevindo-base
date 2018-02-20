@@ -64,11 +64,25 @@ public class BaseCamera {
         return image;
     }
 
-    public String getCurrentPhotoPath() {
+    public String getCurrentPhotoPath(boolean useDelay) {
+        if (useDelay){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return mCurrentPhotoPath;
     }
 
-    public Bitmap getCurrentPhotoBitmap(){
+    public Bitmap getCurrentPhotoBitmap(boolean useDelay){
+        if (useDelay){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return BitmapFactory.decodeFile(mCurrentPhotoPath);
     }
 }
